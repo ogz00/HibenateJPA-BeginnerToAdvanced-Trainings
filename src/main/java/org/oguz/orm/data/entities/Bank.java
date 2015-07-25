@@ -111,6 +111,15 @@ public class Bank {
 	public void setState(String state) {
 		this.address.setState(state);
 	}
+	
+	public String getAddressType() {
+		return address.getAddressType();
+	}
+
+	public void setAddressType(String addressType) {
+		this.address.setAddressType(addressType);
+	}
+
 
 	public String getZipCode() {
 		return address.getZipCode();

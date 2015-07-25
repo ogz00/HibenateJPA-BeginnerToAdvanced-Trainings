@@ -4,36 +4,86 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.oguz.orm.data.entities.Account;
+import org.oguz.orm.data.entities.AccountType;
 import org.oguz.orm.data.entities.Address;
 import org.oguz.orm.data.entities.Bank;
+import org.oguz.orm.data.entities.Bond;
 import org.oguz.orm.data.entities.Budget;
 import org.oguz.orm.data.entities.Credential;
+import org.oguz.orm.data.entities.Currency;
+import org.oguz.orm.data.entities.Market;
+import org.oguz.orm.data.entities.Stock;
 import org.oguz.orm.data.entities.TimeTest;
 import org.oguz.orm.data.entities.User;
 import org.oguz.orm.data.entities.Transaction;
+import org.oguz.orm.data.entities.ids.CurrencyId;
 
 public class Application {
+	private static Integer doStuff(int i) {
+		return i;
+	}
 
 	public static void main(String[] args) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		// session.beginTransaction();
+
+		SessionFactory sessionFactory = null;
+		Session session = null;
+		org.hibernate.Transaction transaction = null;
+
 		try {
-			// session.getTransaction().begin();
-			org.hibernate.Transaction transaction = session.beginTransaction();
+			sessionFactory = HibernateUtil.getSessionFactory();
+			session = sessionFactory.openSession();
+			transaction = session.beginTransaction();
+
+			/*
+			 * Bank detachedBank = (Bank)session.get(Bank.class, 1L);
+			 * transaction.commit(); session.close(); Session session2 =
+			 * HibernateUtil.getSessionFactory().openSession();
+			 * org.hibernate.Transaction transaction2 =
+			 * session2.beginTransaction(); session2.saveOrUpdate(detachedBank);
+			 * detachedBank.setName("Test Bank 2"); transaction2.commit();
+			 * session2.close();
+			 */
+
+			/*
+			 * session.update(bank1); System.out.println("Method executed");
+			 * System.out.println(bank1.getName()); bank1 =
+			 * (Bank)session.get(Bank.class, 1L); Bank bank1 =
+			 * (Bank)session.load(Bank.class, 1L);
+			 * bank1.setName("New Hope Bank");
+			 * bank1.setLastUpdatedBy("Oğuzhan Karacullu");
+			 * bank1.setLastUpdatedDate(new Date());
+			 * System.out.println("Method executed");
+			 * System.out.println(bank1.getName());
+			 * System.out.println(session.contains(bank1));
+			 * session.delete(bank1); System.out.println("Method Invoked");
+			 * System.out.println(session.contains(bank1));
+			 */
+
+			/*
+			 * Bank bank = (Bank)session.get(Bank.class, 1L);
+			 * bank.setName("Something 1Different");
+			 * System.out.println("Calling flush"); session.flush();
+			 * bank.setAddressLine1("Ano1ther Address Line");
+			 * System.out.println("calling commit");
+			 */
 
 			User user = createUser();
 			User user2 = createUser();
-;
-			 //session.save(user);
+			// session.save(user);
 
 			Credential credential = createCredential(user);
 			Credential credential2 = createCredential(user2);
 
 			session.save(credential);
 			session.save(credential2);
+			session.flush();
 
 			// TimeTest test = new TimeTest(new Date());
 			// session.save(test);
@@ -41,54 +91,109 @@ public class Application {
 			Bank bank = createBank();
 
 			Account account = createNewAccount();
+			account.setAccountType(AccountType.SAVINGS);
+			//account.setBank(bank);
 			Account account2 = createNewAccount();
+			account2.setAccountType(AccountType.LOAN);
 
 			account.getUsers().add(user);
 			account.getUsers().add(user2);
 			account2.getUsers().add(user);
 			account2.getUsers().add(user2);
-			
-			//user.getAccounts().add(account);
 
-			account.getTransactions().add(createNewBeltPurchase(account));
-			account.getTransactions().add(createShoePurchase(account));
+			// user.getAccounts().add(account);
+			Transaction trans1 = createNewBeltPurchase(account);
+			Transaction trans2 = createShoePurchase(account);
+			account.getTransactions().add(trans1);
+			account.getTransactions().add(trans2);
 
 			bank.getAccount().add(account);
 			bank.getAccount().add(account2);
-			
-			session.save(bank);
-			//session.save(account);
-			//session.save(account2);
 
+			// System.out.println(session.contains(account));
+			// session.save(account);
 			// session.refresh(account);
 
+			session.save(bank);
 			Budget budget = createBudget();
 
 			budget.getTransactions().add(account.getTransactions().get(0));
 			budget.getTransactions().add(account.getTransactions().get(1));
 
-			session.save(budget);
+			// session.save(budget);
 
-			// session.getTransaction().commit();
-			transaction.commit();
+			/*Currency curr = new Currency();
+			curr.setCountryName("United States");
+			curr.setName("Dollar");
+			curr.setSymbol("$");
+			session.persist(curr);*/
+
+			Currency dbCurr = (Currency) session.load(Currency.class,
+					new CurrencyId("Dollar", "United States"));
+			System.out.println(dbCurr.getSymbol());
 			
-			//Account dbAccount =(Account)session.get(Account.class, account.getAccountId());
-			//System.out.println(dbAccount.getUsers().iterator().next().getEmailAddress());
+			Market market = new Market();
+			market.setMarketName("London Stock Exchange");
+			market.setCurrency(dbCurr);
+			
+			session.persist(market);
+			
+			
+			Market dbMarket = (Market)session.get(Market.class, market.getMarketId());
+			System.out.println(dbMarket.getCurrency().getCountryName());
+			
+			
+			Stock stock = createStock();
+			session.save(stock);
+			
+			Bond bond = createBond();
+			session.save(bond);
+			
+			transaction.commit();
+
+			// Account dbAccount =(Account)session.get(Account.class,
+			// account.getAccountId());
+			// System.out.println(dbAccount.getUsers().iterator().next().getEmailAddress());
 
 			// session.refresh(bank);
 			// System.out.println(bank.toString());
 
 			// session.refresh(user);
 			// System.out.println(user.getAge());
-			// session.refresh(test);
-			// System.out.println(test.toString());
 
+		} catch (ObjectNotFoundException e) {
+			e.printStackTrace();
+			Bank bank1 = (Bank) session.load(Bank.class, 1L);
+			System.out.println("Method executed");
+			System.out.println(bank1.getName());
 		} catch (Exception e) {
+			transaction.rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			// session.close();
 			HibernateUtil.getSessionFactory().close();
 		}
+	}
+	
+	private static Bond createBond() {
+		Bond bond = new Bond();
+		bond.setInterestRate(new BigDecimal("123.22"));
+		bond.setIssuer("JP Morgan Chase");
+		bond.setMaturityDate(new Date());
+		bond.setPurchaseDate(new Date());
+		bond.setName("Long Term Bond Purchases");
+		bond.setValue(new BigDecimal("10.22"));
+		return bond;
+	}
+
+	private static Stock createStock(){
+		Stock stock = new Stock();
+		stock.setIssuer("Allen Edmonds");
+		stock.setName("Private American Stock Purchases");
+		stock.setPurchaseDate(new Date());
+		stock.setQuantity(new BigDecimal("1922"));
+		stock.setSharePrice(new BigDecimal("100.00"));
+		return stock;
 	}
 
 	private static Budget createBudget() {
