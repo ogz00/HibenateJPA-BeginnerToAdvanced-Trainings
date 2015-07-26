@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 @Entity
@@ -42,8 +44,9 @@ public abstract class Investment {
 
 	@Column(name = "ISSUER")
 	protected String issuer;
-
-	@Column(name = "PURCHASE_DATE")
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "PURCHASE_DATE", columnDefinition="DATETIME")
 	protected Date purchaseDate;
 
 	public String getName() {

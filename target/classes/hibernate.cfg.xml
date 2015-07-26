@@ -6,12 +6,19 @@
 <hibernate-configuration>
 
 	<session-factory>
-
-		<!-- Database connection settings -->
+		<!-- <property name="hibernate.hbm2ddl.auto">create-drop</property>
+		
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/ifinances2</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">admin</property> -->
+		<!-- Database connection settings-->
+		
+		<property name="hibernate.hbm2ddl.auto">validate</property>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="connection.url">jdbc:mysql://localhost:3306/ifinances</property>
 		<property name="connection.username">root</property>
-		<property name="connection.password">admin</property>
+		<property name="connection.password">admin</property> 
 
 		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>

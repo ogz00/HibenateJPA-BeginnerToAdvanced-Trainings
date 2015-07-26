@@ -43,7 +43,7 @@ public class Transaction {
 	@Column(name = "CLOSING_BALANCE")
 	private BigDecimal closingBalance;
 
-	@Column(name = "NOTES")
+	@Column(name = "NOTES", columnDefinition="MEDIUMTEXT")
 	private String notes;
 
 	@Column(name = "LAST_UPDATED_DATE")

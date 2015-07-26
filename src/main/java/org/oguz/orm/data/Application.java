@@ -29,9 +29,6 @@ import org.oguz.orm.data.entities.UserCredentialView;
 import org.oguz.orm.data.entities.ids.CurrencyId;
 
 public class Application {
-	private static Integer doStuff(int i) {
-		return i;
-	}
 
 	public static void main(String[] args) {
 
@@ -69,31 +66,24 @@ public class Application {
 			 * System.out.println(session.contains(bank1));
 			 */
 
-			/*
-			 * Bank bank = (Bank)session.get(Bank.class, 1L);
-			 * bank.setName("Something 1Different");
-			 * System.out.println("Calling flush"); session.flush();
-			 * bank.setAddressLine1("Ano1ther Address Line");
-			 * System.out.println("calling commit");
-			 */
-
+			Bank bank = createBank();
 			User user = createUser();
 			User user2 = createUser();
-			// session.save(user);
+			Account account = createNewAccount();
+			
+			session.save(user);
 
 			Credential credential = createCredential(user);
 			Credential credential2 = createCredential(user2);
 
 			session.save(credential);
 			session.save(credential2);
-			session.flush();
+			//session.flush();
 
 			// TimeTest test = new TimeTest(new Date());
-			// session.save(test);
+			// session.save(test);			
 
-			Bank bank = createBank();
-
-			Account account = createNewAccount();
+			
 			account.setAccountType(AccountType.SAVINGS);
 			//account.setBank(bank);
 			Account account2 = createNewAccount();

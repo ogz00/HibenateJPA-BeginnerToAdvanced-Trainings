@@ -17,7 +17,7 @@ public class Credential {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "CREDENTIAL_ID")
-	private String credentialId;
+	private Long credentialId;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "USER_ID")
@@ -29,11 +29,11 @@ public class Credential {
 	@Column(name = "PASSWORD", nullable = false, length = 100)
 	private String password;
 
-	public String getCredentialId() {
+	public Long getCredentialId() {
 		return credentialId;
 	}
 
-	public void setCredentialId(String credentialId) {
+	public void setCredentialId(Long credentialId) {
 		this.credentialId = credentialId;
 	}
 

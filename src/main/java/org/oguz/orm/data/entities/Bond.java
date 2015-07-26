@@ -24,8 +24,8 @@ public class Bond extends Investment{
 	@Column(name = "INTEREST_RATE")
 	private BigDecimal interestRate;
 
-	@Temporal(value = TemporalType.DATE)
-	@Column(name = "MATURITY_DATE")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	@Column(name = "MATURITY_DATE", columnDefinition="DATETIME")
 	private Date maturityDate;
 
 	public BigDecimal getValue() {

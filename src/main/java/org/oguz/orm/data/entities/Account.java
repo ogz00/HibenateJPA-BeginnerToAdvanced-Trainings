@@ -29,7 +29,7 @@ public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ACCOUNT_ID")
-	private String accountId;
+	private Long accountId;
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_account", joinColumns = @JoinColumn(name = "ACCOUNT_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
@@ -74,11 +74,11 @@ public class Account {
 	@Column(name = "CREATED_BY")
 	private String createdBy;
 
-	public String getAccountId() {
+	public Long getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(String accountId) {
+	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
 	}
 
