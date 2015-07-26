@@ -1,0 +1,27 @@
+Hibernate: select PK_VALUE from ifinances_keys where PK_NAME = 'Investment' for update
+Hibernate: insert into ifinances_keys(PK_NAME, PK_VALUE) values('Investment', ?)
+Hibernate: update ifinances_keys set PK_VALUE = ? where PK_VALUE = ? and PK_NAME = 'Investment'
+Hibernate: insert into portfolio (NAME) values (?)
+Hibernate: insert into stock (ISSUER, NAME, PORTFOLIO_ID, PURCHASE_DATE, QUANTITY, SHARE_PRICE, INVESTMENT_ID) values (?, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into bond (ISSUER, NAME, PORTFOLIO_ID, PURCHASE_DATE, INTEREST_RATE, MATURITY_DATE, VALUE, INVESTMENT_ID) values (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: select portfolio0_.PORTFOLIO_ID as PORTFOLI1_11_0_, portfolio0_.NAME as NAME2_11_0_ from portfolio portfolio0_ where portfolio0_.PORTFOLIO_ID=?
+Hibernate: select investment0_.PORTFOLIO_ID as PORTFOLI5_11_0_, investment0_.INVESTMENT_ID as INVESTME1_0_0_, investment0_.INVESTMENT_ID as INVESTME1_0_1_, investment0_.ISSUER as ISSUER2_0_1_, investment0_.NAME as NAME3_0_1_, investment0_.PORTFOLIO_ID as PORTFOLI5_0_1_, investment0_.PURCHASE_DATE as PURCHASE4_0_1_, investment0_.INTEREST_RATE as INTEREST1_4_1_, investment0_.MATURITY_DATE as MATURITY2_4_1_, investment0_.VALUE as VALUE3_4_1_, investment0_.QUANTITY as QUANTITY1_12_1_, investment0_.SHARE_PRICE as SHARE_PR2_12_1_, investment0_.clazz_ as clazz_1_ from ( select INVESTMENT_ID, ISSUER, NAME, PURCHASE_DATE, PORTFOLIO_ID, INTEREST_RATE, MATURITY_DATE, VALUE, null as QUANTITY, null as SHARE_PRICE, 1 as clazz_ from bond union select INVESTMENT_ID, ISSUER, NAME, PURCHASE_DATE, PORTFOLIO_ID, null as INTEREST_RATE, null as MATURITY_DATE, null as VALUE, QUANTITY, SHARE_PRICE, 2 as clazz_ from stock ) investment0_ where investment0_.PORTFOLIO_ID=?
+Long Term Bond Purchases
+Private American Stock Purchases
+
+Hibernate: insert into investment (ISSUER, NAME, PORTFOLIO_ID, PURCHASE_DATE, QUANTITY, SHARE_PRICE, INVESTMENT_TYPE, INVESTMENT_ID) values (?, ?, ?, ?, ?, ?, 'Stock', ?)
+Hibernate: insert into investment (ISSUER, NAME, PORTFOLIO_ID, PURCHASE_DATE, INTEREST_RATE, MATURITY_DATE, VALUE, INVESTMENT_TYPE, INVESTMENT_ID) values (?, ?, ?, ?, ?, ?, ?, 'Bond', ?)
+
+Hibernate: select PK_VALUE from ifinances_keys where PK_NAME = 'investment' for update
+Hibernate: update ifinances_keys set PK_VALUE = ? where PK_VALUE = ? and PK_NAME = 'investment'
+Hibernate: insert into portfolio (NAME) values (?)
+Hibernate: insert into investment (ISSUER, NAME, PORTFOLIO_ID, PURCHASE_DATE, QUANTITY, SHARE_PRICE, INVESTMENT_TYPE, INVESTMENT_ID) values (?, ?, ?, ?, ?, ?, 'STCK', ?)
+Hibernate: insert into investment (ISSUER, NAME, PORTFOLIO_ID, PURCHASE_DATE, INTEREST_RATE, MATURITY_DATE, VALUE, INVESTMENT_TYPE, INVESTMENT_ID) values (?, ?, ?, ?, ?, ?, ?, 'BND', ?)
+Hibernate: select portfolio0_.PORTFOLIO_ID as PORTFOLI1_10_0_, portfolio0_.NAME as NAME2_10_0_ from portfolio portfolio0_ where portfolio0_.PORTFOLIO_ID=?
+Hibernate: select investment0_.PORTFOLIO_ID as PORTFOL11_10_0_, investment0_.INVESTMENT_ID as INVESTME2_8_0_, investment0_.INVESTMENT_ID as INVESTME2_8_1_, investment0_.ISSUER as ISSUER3_8_1_, investment0_.NAME as NAME4_8_1_, investment0_.PORTFOLIO_ID as PORTFOL11_8_1_, investment0_.PURCHASE_DATE as PURCHASE5_8_1_, investment0_.INTEREST_RATE as INTEREST6_8_1_, investment0_.MATURITY_DATE as MATURITY7_8_1_, investment0_.VALUE as VALUE8_8_1_, investment0_.QUANTITY as QUANTITY9_8_1_, investment0_.SHARE_PRICE as SHARE_P10_8_1_, investment0_.INVESTMENT_TYPE as INVESTME1_8_1_ from investment investment0_ where investment0_.PORTFOLIO_ID=?
+Private American Stock Purchases
+Long Term Bond Purchases
+
+Hibernate: select distinct account1_.ACCOUNT_ID as ACCOUNT_1_0_, account1_.ACCOUNT_TYPE as ACCOUNT_2_0_, account1_.BANK_ID as BANK_ID12_0_, account1_.CLOSE_DATE as CLOSE_DA3_0_, account1_.CREATED_BY as CREATED_4_0_, account1_.CREATED_DATE as CREATED_5_0_, account1_.CURRENT_BALANCE as CURRENT_6_0_, account1_.INITIAL_BALANCE as INITIAL_7_0_, account1_.LAST_UPDATED_BY as LAST_UPD8_0_, account1_.LAST_UPDATED_DATE as LAST_UPD9_0_, account1_.NAME as NAME10_0_, account1_.OPEN_DATE as OPEN_DA11_0_ from transaction transactio0_ inner join account account1_ on transactio0_.ACCOUNT_ID=account1_.ACCOUNT_ID where transactio0_.AMOUNT>400 and transactio0_.TRANSACTION_TYPE='Deposit'
+Hibernate: select bank0_.BANK_ID as BANK_ID1_1_0_, bank0_.ADDRESS_LINE_1 as ADDRESS_2_1_0_, bank0_.ADDRESS_LINE_2 as ADDRESS_3_1_0_, bank0_.ADDRESS_TYPE as ADDRESS_4_1_0_, bank0_.CITY as CITY5_1_0_, bank0_.STATE as STATE6_1_0_, bank0_.ZIP_CODE as ZIP_CODE7_1_0_, bank0_.CREATED_BY as CREATED_8_1_0_, bank0_.CREATED_DATE as CREATED_9_1_0_, bank0_.IS_INTERNATIONAL as IS_INTE10_1_0_, bank0_.LAST_UPDATED_BY as LAST_UP11_1_0_, bank0_.LAST_UPDATED_DATE as LAST_UP12_1_0_, bank0_.NAME as NAME13_1_0_ from bank bank0_ where bank0_.BANK_ID=?
+Checking Account
