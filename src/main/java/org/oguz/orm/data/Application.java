@@ -18,11 +18,14 @@ import org.oguz.orm.data.entities.Bond;
 import org.oguz.orm.data.entities.Budget;
 import org.oguz.orm.data.entities.Credential;
 import org.oguz.orm.data.entities.Currency;
+import org.oguz.orm.data.entities.Investment;
 import org.oguz.orm.data.entities.Market;
+import org.oguz.orm.data.entities.Portfolio;
 import org.oguz.orm.data.entities.Stock;
 import org.oguz.orm.data.entities.TimeTest;
 import org.oguz.orm.data.entities.User;
 import org.oguz.orm.data.entities.Transaction;
+import org.oguz.orm.data.entities.UserCredentialView;
 import org.oguz.orm.data.entities.ids.CurrencyId;
 
 public class Application {
@@ -120,7 +123,7 @@ public class Application {
 			budget.getTransactions().add(account.getTransactions().get(0));
 			budget.getTransactions().add(account.getTransactions().get(1));
 
-			// session.save(budget);
+			 session.save(budget);
 
 			/*Currency curr = new Currency();
 			curr.setCountryName("United States");
@@ -138,18 +141,36 @@ public class Application {
 			
 			session.persist(market);
 			
+			//Market dbMarket = (Market)session.get(Market.class, market.getMarketId());
+			//System.out.println(dbMarket.getCurrency().getCountryName());
 			
-			Market dbMarket = (Market)session.get(Market.class, market.getMarketId());
-			System.out.println(dbMarket.getCurrency().getCountryName());
 			
+			Portfolio portfolio = new Portfolio();
+			portfolio.setName("Second Invetments");
 			
 			Stock stock = createStock();
-			session.save(stock);
-			
+			stock.setPortfolio(portfolio);
 			Bond bond = createBond();
+			bond.setPortfolio(portfolio);
+			
+			portfolio.getInvestment().add(stock);
+			portfolio.getInvestment().add(bond);
+			
+			session.save(stock);
 			session.save(bond);
 			
+			UserCredentialView view = (UserCredentialView)session.get(UserCredentialView.class,1L);
+			System.out.println(view.getFirstName());
+			System.out.println(view.getLastName());
+			
 			transaction.commit();
+			
+			/*Portfolio dbPortfolio = (Portfolio) session.get(Portfolio.class, portfolio.getPortfolioId());
+			session.refresh(dbPortfolio);
+			
+			for (Investment i:dbPortfolio.getInvestment()){
+				System.out.println(i.getName()); 
+			}*/
 
 			// Account dbAccount =(Account)session.get(Account.class,
 			// account.getAccountId());

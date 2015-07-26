@@ -31,6 +31,8 @@
 		<mapping class="org.oguz.orm.data.entities.Bond" />
 		<mapping class="org.oguz.orm.data.entities.Stock" />
 		<mapping class="org.oguz.orm.data.entities.Investment" />
+		<mapping class="org.oguz.orm.data.entities.Portfolio" />
+		<mapping class="org.oguz.orm.data.entities.UserCredentialView" />
 
 		<!-- <mapping resource="org/oguz/orm/data/entities/User.java"/> JDBC connection 
 			pool (use the built-in) <property name="connection.pool_size">1</property> 
