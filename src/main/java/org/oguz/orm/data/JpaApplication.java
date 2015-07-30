@@ -3,11 +3,17 @@ package org.oguz.orm.data;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 import org.oguz.orm.data.entities.Account;
 import org.oguz.orm.data.entities.Address;
@@ -27,19 +33,40 @@ public class JpaApplication {
 			em = emf.createEntityManager();
 			tx = em.getTransaction();
 			tx.begin();
+			int pageNumber = 3;
+			int pageSize = 2;
 
-			//Bank bank = createBank();
-			//em.persist(bank);
-			
+			// Bank bank = createBank();
+			// em.persist(bank);
+
 			Bank bank = em.find(Bank.class, 1L);
 			em.detach(bank);
-			System.out.println(em.contains(bank));
-			//bank.setName("Another Demonstration2");
-			Bank bank2 =em.merge(bank);
-			System.out.println(em.contains(bank2));
-			System.out.println(bank2.getName());
-			
+			// System.out.println(em.contains(bank));
+			// bank.setName("Another Demonstration2");
+			Bank bank2 = em.merge(bank);
+			// System.out.println(em.contains(bank2));
+			// System.out.println(bank2.getName());
 			bank.setName("doesnt occur");
+
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Transaction> criteriaQuery = cb
+					.createQuery(Transaction.class);
+
+			Root<Transaction> root = criteriaQuery.from(Transaction.class);
+			Path<BigDecimal> amountPath = root.get("amount");
+			Path<String> transactionType = root.get("transactionType");
+			criteriaQuery.select(root).where(
+					cb.and(cb.le(amountPath, new BigDecimal("20.00")),
+							cb.equal(transactionType, "Withdrawl")));
+
+			TypedQuery<Transaction> query = em.createQuery(criteriaQuery);
+			// query.setFirstResult((pageNumber-1)*pageSize);
+			// query.setMaxResults(pageSize);
+			List<Transaction> transactions = query.getResultList();
+
+			for (Transaction t : transactions) {
+				System.out.println(t.getTitle());
+			}
 
 			tx.commit();
 

@@ -28,7 +28,7 @@ public class JpqlApplication {
 			tx = em.getTransaction();
 			tx.begin();
 
-			TypedQuery<Transaction> query = em.createQuery(
+			/*TypedQuery<Transaction> query = em.createQuery(
 					"from Transaction t "
 					+ "where (t.amount between ?1 and ?2)"
 					+ "and t.title like '%s'"
@@ -53,12 +53,17 @@ public class JpqlApplication {
 			
 			for(Account a: accounts){
 				System.out.println(a.getName());
-			}
-			Query query2 = em.createQuery("select distinct t.account.name,"
-					+ " concat(concat(t.account.bank.name,' '),t.account.bank.address.state) "
-					+ "from Transaction t"
-					+ " where t.amount > 400 and "
-					+ " t.transactionType = 'Deposit'");
+			}*/
+		//	Query query2 = em.createQuery("select distinct t.account.name,"
+		//			+ " concat(concat(t.account.bank.name,' '),t.account.bank.address.state) "
+		//			+ "from Transaction t"
+		//			+ " where t.amount > :amount and "
+		//			+ " t.transactionType = 'withdrawl'");
+		//			query.setParameter("amount", new BigDecimal("99"));	
+			
+			Query query2 = em.createNamedQuery("Account.byWithdrawlAmount");
+			query2.setParameter("amount", new BigDecimal("99"));
+			
 			List <Object[]> accounts2 = query2.getResultList();
 			
 			for(Object[] a: accounts2){
