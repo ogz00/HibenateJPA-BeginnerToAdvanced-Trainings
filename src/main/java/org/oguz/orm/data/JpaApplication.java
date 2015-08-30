@@ -15,12 +15,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
-import org.oguz.orm.data.entities.Account;
-import org.oguz.orm.data.entities.Address;
-import org.oguz.orm.data.entities.Bank;
-import org.oguz.orm.data.entities.Credential;
-import org.oguz.orm.data.entities.User;
-import org.oguz.orm.data.entities.Transaction;
+import org.oguz.orm.entities.Account;
+import org.oguz.orm.entities.Address;
+import org.oguz.orm.entities.Bank;
+import org.oguz.orm.entities.Credential;
+import org.oguz.orm.entities.Transaction;
+import org.oguz.orm.entities.User;
 
 public class JpaApplication {
 

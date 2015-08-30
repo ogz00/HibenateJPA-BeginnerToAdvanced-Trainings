@@ -11,8 +11,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.oguz.orm.data.entities.Account;
-import org.oguz.orm.data.entities.Transaction;
+import org.oguz.orm.entities.Account;
+import org.oguz.orm.entities.Transaction;
 
 public class HqlApplication {
 

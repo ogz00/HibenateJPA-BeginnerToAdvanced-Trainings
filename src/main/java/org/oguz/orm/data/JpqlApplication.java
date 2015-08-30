@@ -11,8 +11,8 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.oguz.orm.data.entities.Account;
-import org.oguz.orm.data.entities.Transaction;
+import org.oguz.orm.entities.Account;
+import org.oguz.orm.entities.Transaction;
 
 public class JpqlApplication {
 
